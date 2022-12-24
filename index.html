@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Kalimba sheet music writer V1.0.0</title>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Kalimba sheet music writer V1.0.0</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" id="select-file">
+	<input type="file" onchange="loadFile()" onclick="Player.stop()" accept="audio/mid">
+        </li>
+        <li class="nav-item">
+          <p>
+<button class="btn btn-primary" id="play-button" onclick="Player.isPlaying() ? pause() : play();" disabled="disabled">Play</button>
+<button class="btn btn-secondary" onclick="stop()">Stop</button>
+  <button class="btn btn-danger" onclick="reset()">Reset</button>
+</p>
+        </li>
+      </ul>
+      <!--<form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>-->
+      Tempo: <span id="tempo-display"></span> bpm<br />
+	<input type="range" onchange="Player.setTempo(this.value);" class="tempo" min="50" max="200"><!-- form-range-->
+    </div>
+  </div>
+</nav>
+<!-- <p id="select-file">
+	<input type="file" onchange="loadFile()" onclick="Player.stop()" accept="audio/mid">
+</p> -->
+<p id="loading">Loading soundfont...</p>
+<!-- <p>
+<button class="btn btn-primary" id="play-button" onclick="Player.isPlaying() ? pause() : play();" disabled="disabled">Play</button>
+<button class="btn btn-secondary" onclick="stop()">Stop</button>
+  <button class="btn btn-danger" onclick="reset()">Reset</button>
+</p> -->
+<!-- <p>
+	Tempo: <span id="tempo-display"></span> bpm<br />
+	<input type="range" onchange="Player.setTempo(this.value);" class="tempo" min="50" max="200"><!--Player.pause();Player.play();--S>
+</p>-->
+<div id="events" class="well"></div>
+<animation_body>
+  <key-note-animation>
+<!--     <div data-key-note="D6"></div>
+    <div data-key-note="B5"></div>
+    <div data-key-note="G5"></div>
+    <div data-key-note="E5"></div>
+    <div data-key-note="C5"></div>
+    <div data-key-note="A4"></div>
+    <div data-key-note="F4"></div>
+    <div data-key-note="D4"></div>
+    <div data-key-note="C4"></div>
+    <div data-key-note="E4"></div>
+    <div data-key-note="G4"></div>
+    <div data-key-note="B4"></div>
+    <div data-key-note="D5"></div>
+    <div data-key-note="F5"></div>
+    <div data-key-note="A5"></div>
+    <div data-key-note="C6"></div>
+    <div data-key-note="E6"></div> -->
+  </key-note-animation>
+</animation_body>
+<br><br>
+<kalimba_body>
+<bottom-pad id="kalimba">
+  <div class="key" data-note="D6" data-key="2"></div>
+  <div class="key" data-note="B5" data-key="7"></div>
+  <div class="key" data-note="G5" data-key="5"></div>
+  <div class="key" data-note="E5" data-key="3"></div>
+  <div class="key" data-note="C5" data-key="1"></div>
+  <div class="key" data-note="A4" data-key="6"></div>
+  <div class="key" data-note="F4" data-key="4"></div>
+  <div class="key" data-note="D4" data-key="2"></div>
+  <div class="key" data-note="C4" data-key="1"></div>
+  <div class="key" data-note="E4" data-key="3"></div>
+  <div class="key" data-note="G4" data-key="5"></div>
+  <div class="key" data-note="B4" data-key="7"></div>
+  <div class="key" data-note="D5" data-key="2"></div>
+  <div class="key" data-note="F5" data-key="4"></div>
+  <div class="key " data-note="A5" data-key="6"></div>
+  <div class="key" data-note="C6" data-key="1"></div>
+  <div class="key last-key" data-note="E6" data-key="3"></div>
+  <bottom-pad></bottom-pad>
+  <top-pad></top-pad>
+  <bottom-pad class="last-pad"></bottom-pad>
+  <div class="logo">Kalimba sheet music writer<br>1.0.0</div>
+</div>
+</kalimba_body>
+<div data-note="NO"></div>
+<!-- partial -->
+  <script src='https://grimmdude.com/MidiPlayerJS/browser/midiplayer.js'></script>
+<script src='https://grimmdude.com/MidiPlayerJS/demo/js/soundfont-player.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>

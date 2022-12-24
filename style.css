@@ -1,0 +1,302 @@
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+kalimba_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#kalimba {
+  display: flex;
+  justify-content: space-around;
+  height: 430px;
+  width: 300px;
+  background-color: #c26f43;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 10px 10px 25px #000, inset 5px 5px 10px rgba(255, 255, 255, 0.4), inset -5px -5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+  position: absolute;
+  bottom: 100px;
+  text-align: center;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: "Arial Black", sans-serif;
+  font-size: 90%;
+  font-weight: bold;
+  color: #222222;
+  text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.2);
+}
+
+.key {
+  margin-top: 20px;
+  width: 12px;
+  height: 100px;
+  border-radius: 5px;
+  background-color: #ADA097;
+  box-shadow: 5px 5px 20px #000;
+  z-index: 10;
+  font-size: 100%;
+  position: relative;
+}
+
+.key-text {
+  display: flex;
+  vertical-align: bottom;
+  position: absolute;
+  bottom: 10%;
+  text-align: center;
+  font-weight: bold;
+  color: #222222;
+  text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.2);
+  z-index: 30;
+}
+
+.key:first-child {
+  margin-left: 15px;
+}
+
+.key.last-key {
+  margin-right: 15px;
+}
+
+.key[data-note=C4] {
+  height: 200px;
+}
+
+.key[data-note=D4] {
+  height: 190px;
+}
+
+.key[data-note=E4] {
+  height: 180px;
+}
+
+.key[data-note=F4] {
+  height: 172px;
+}
+
+.key[data-note=G4] {
+  height: 165px;
+}
+
+.key[data-note=A4] {
+  height: 155px;
+}
+
+.key[data-note=B4] {
+  height: 147px;
+}
+
+.key[data-note=C5] {
+  height: 140px;
+}
+
+.key[data-note=D5] {
+  height: 135px;
+}
+
+.key[data-note=E5] {
+  height: 125px;
+}
+
+.key[data-note=F5] {
+  height: 120px;
+}
+
+.key[data-note=G5] {
+  height: 115px;
+}
+
+.key[data-note=A5] {
+  height: 110px;
+}
+
+.key[data-note=B5] {
+  height: 105px;
+}
+
+.key-[data-note=C6] {
+  height: 102px;
+}
+
+.key[data-note=D6] {
+  height: 100px;
+}
+
+.key[data-note=E6] {
+  height: 93px;
+}
+
+top-pad {
+  position: absolute;
+  width: 280px;
+  background-color: #c26f43;
+  background-color: #ADA097;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  top: 60px;
+  border-radius: 7px;
+  height: 15px;
+  box-shadow: 5px 5px 25px #000, inset 5px 5px 25px rgba(255, 255, 255, 0.5), inset -5px -5px 25px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+}
+
+bottom-pad {
+  position: absolute;
+  width: 280px;
+  background-color: #c26f43;
+  top: 30px;
+  height: 15px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px #000, inset 5px 5px 15px rgba(255, 255, 255, 0.3), inset -5px -5px 15px rgba(0, 0, 0, 0.3);
+}
+
+bottom-pad.last-pad {
+  top: 90px;
+}
+
+.key:hover {
+  background-color: #e6e3e3;
+}
+
+.key:active {
+  background-color: #42a1f5;
+}
+
+.key_active {
+  background-color: #42a1f5 !important;
+}
+
+animation_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+key-note-animation {
+  position: relative;
+  margin-bottom: 200px;
+  right: 143px;
+  right: 150px;
+  top: 80px;
+  z-index: 20;
+}
+
+[data-key-note] {
+  pointer-events: none;
+  width: 12px;
+  height: 30px;
+  margin: 1px;
+  background-color: #42a1f5;
+  font-size: 14px;
+  position: absolute;
+  animation-name: key-note-animation;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  border-radius: 2px;
+}
+
+[data-key-note=D6] {
+  left: 15px;
+}
+
+[data-key-note=B5] {
+  left: 31px;
+}
+
+[data-key-note=G5] {
+  left: 47px;
+}
+
+[data-key-note=E5] {
+  left: 63px;
+}
+
+[data-key-note=C5] {
+  left: 79px;
+}
+
+[data-key-note=A4] {
+  left: 95px;
+}
+
+[data-key-note=F4] {
+  left: 111px;
+}
+
+[data-key-note=D4] {
+  left: 127px;
+}
+
+[data-key-note=C4] {
+  left: 142px;
+}
+
+[data-key-note=E4] {
+  left: 158px;
+}
+
+[data-key-note=G4] {
+  left: 174px;
+}
+
+[data-key-note=B4] {
+  left: 190px;
+}
+
+[data-key-note=D5] {
+  left: 206px;
+}
+
+[data-key-note=F5] {
+  left: 222px;
+}
+
+[data-key-note=A5] {
+  left: 238px;
+}
+
+[data-key-note=C6] {
+  left: 254px;
+}
+
+[data-key-note=E6] {
+  left: 269px;
+}
+
+[data-key-note=C-1] {
+  display: none;
+}
+
+@keyframes key-note-animation {
+  0% {
+    opacity: 0;
+    background-color: #42a1f5;
+  }
+  10% {
+    opacity: 1;
+    background-color: #42a1f5;
+  }
+  90% {
+    opacity: 1;
+    background-color: #42a1f5;
+  }
+  /*90% {
+    background-color: #e7f326;
+  }*/
+  100% {
+    opacity: 0;
+    transform: translateY(200px);
+  }
+}
