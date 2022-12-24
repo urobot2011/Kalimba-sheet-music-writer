@@ -1,7 +1,12 @@
 var MidiPlayer = MidiPlayer;
+var instrument;
 var loadFile, loadDataUri, Player;
 var AudioContext = window.AudioContext || window.webkitAudioContext || false;
 var ac = new AudioContext || new webkitAudioContext;
+var currentTime;
+var timeoutId;
+var timeoutId2;
+var timeoutId3;
 var bool1 = 0;
 var tempo = 50;
 
@@ -21,126 +26,141 @@ var pause = function() {
 }
 
 var stop = function() {
+	if($('#lesson_mode').is(':checked')){
+		$('#lesson_mode').prop('checked', 0);
+		clearTimeout(timeoutId);
+		clearTimeout(timeoutId2);
+		clearTimeout(timeoutId3);
+		setTimeout(function() {
+			stop();
+			document.querySelectorAll('.key').forEach((key) => {
+				key.classList.remove("key_active");
+			});
+		}, 8000);
+	}
 	Player.stop();
 	document.getElementById('play-button').innerHTML = 'Play';
 }
 
 var reset = function() {
 	document.querySelectorAll('.key').forEach((key) => {
-	  key.classList.remove("key_active");
-  });
-  document.getElementById('tempo-display').innerHTML = tempo;
-  $('.tempo').val(tempo);
+		key.classList.remove("key_active");
+	});
+	document.getElementById('tempo-display').innerHTML = tempo;
+	$('.tempo').val(tempo);
 }
 
-// var newstyle = document.createElement("p");
-// newstyle.htmlContent = "new child node";
-// var animationDiv = document.querySelector("animation").parentNode;
-// animationDiv.insertBefore(newstyle, null);
+var play = function() {
+	Player.play();
+	document.getElementById('play-button').innerHTML = 'Pause';
+}
+
+var playmidi = function(event) {
+	if (bool1 == 0) {
+		tempo = Player.tempo;
+		bool1 = 1;
+	}
+	Player.setTempo($('.tempo').val());
+	if (event.name == 'Note on' && event.velocity > 0) {
+		$('key-note-animation').append('<div data-key-note="' + event.noteName + '"></div>');
+	}
+	setTimeout(function() {
+		if (event.name == 'Note on') {
+			instrument.play(event.noteName, ac.currentTime, {
+				gain: event.velocity / 100
+			});
+			var notediv = document.querySelector('[data-note="' + event.noteName.replace(/C-1/gi, 'NO') + '"]');
+			notediv.classList.add("key_active");
+			console.log("event: " + event.name + ", " + event.noteName.replace(/C-1/gi, 'NO'));
+			//document.querySelector('key-note-animation').innerHTML=document.querySelector('key-note-animation').innerHTML + '<div data-key-note="'+event.noteName+'"></div>';
+			//$('key-note-animation').append('<div data-key-note="'+event.noteName+'"></div>');
+		}
+		if (event.name == 'Note off') {
+			var notediv = document.querySelector('[data-note="' + event.noteName.replace(/C-1/gi, 'NO') + '"]');
+			notediv.classList.remove("key_active");
+			console.log("event: " + event.name + ", " + event.noteName.replace(/C-1/gi, 'NO'))
+		}
+	}, 1800);
+	document.getElementById('tempo-display').innerHTML = Player.tempo;
+}
+
+var lesson_mode = function(event) {
+	if($('#lesson_mode').is(':checked')){
+		playmidi(event);
+		timeoutId = setTimeout(function() {
+			pause();
+		}, 1500);
+		timeoutId1 = setTimeout(function() {
+			playmidi(event);
+		}, 3000);
+		// setTimeout(function() {
+		// 	playmidi(event);
+		// }, 9000);
+		// setTimeout(function() {
+		// 	playmidi(event);
+		// }, 12000);
+		timeoutId2 = setTimeout(function() {
+				play();
+		}, 7500);
+	}
+	if(!$('#lesson_mode').is(':checked')){
+		clearTimeout(timeoutId);
+		clearTimeout(timeoutId2);
+		clearTimeout(timeoutId3);
+	}
+}
 
 document.querySelectorAll('.key').forEach((key) => {
 	key.innerHTML = '<span class="key-text">' + key.getAttribute("data-note").substring(0, 1) + '<br>' + key.getAttribute("data-key") + '</span>';
-  
+
 });
 
-Soundfont.instrument(ac, 'kalimba').then(function(instrument) {
+Soundfont.instrument(ac, 'kalimba').then(function(instrumentnow) {
+	instrument = instrumentnow;
 	document.getElementById('loading').style.display = 'none';
 	document.getElementById('select-file').style.display = 'block';
-	
+
 	document.querySelectorAll('.key').forEach((key) => {
 		key.addEventListener("click", function(e) {
 			instrument.play(e.target.dataset.note.replace(/C-1/gi, 'C4')); //.replace(/C-1/gi, 'C4')
 		});
 	});
-	
+
 	loadFile = function() {
 		Player.stop();
 		var file = document.querySelector('input[type=file]').files[0];
 		var reader = new FileReader();
 		if (file) reader.readAsArrayBuffer(file);
-		
 		reader.addEventListener("load", function() {
+			bool1 = 0;
 			Player = new MidiPlayer.Player(function(event) {
-        
-        if(bool1 == 0){
-        tempo = Player.tempo;
-        bool1 = 1;
-      }Player.setTempo($('.tempo').val());
-        if (event.name == 'Note on' && event.velocity > 0) {
-            $('key-note-animation').append('<div data-key-note="'+event.noteName+'"></div>');
-        }
-				setTimeout(function() {
-					if (event.name == 'Note on') {
-						instrument.play(event.noteName, ac.currentTime, {
-							gain: event.velocity / 100
-						});
-						var notediv = document.querySelector('[data-note="' + event.noteName.replace(/C-1/gi, 'NO') + '"]');
-						notediv.classList.add("key_active");
-						console.log("event: " + event.name + ", " + event.noteName.replace(/C-1/gi, 'NO'));
-            //document.querySelector('key-note-animation').innerHTML=document.querySelector('key-note-animation').innerHTML + '<div data-key-note="'+event.noteName+'"></div>';
-            //$('key-note-animation').append('<div data-key-note="'+event.noteName+'"></div>');
-					}
-					if (event.name == 'Note off') {
-						var notediv = document.querySelector('[data-note="' + event.noteName.replace(/C-1/gi, 'NO') + '"]');
-						notediv.classList.remove("key_active");
-						console.log("event: " + event.name + ", " + event.noteName.replace(/C-1/gi, 'NO'))
-					}
-					document.getElementById('tempo-display').innerHTML = Player.tempo;
-				}, 1800);
+				playmidi(event);
+				lesson_mode(event);
 			});
-			
+
 			Player.loadArrayBuffer(reader.result);
-			
+
 			document.getElementById('play-button').removeAttribute('disabled');
-			
+
 			play();
 		}, false);
 	}
-	
+
 	loadDataUri = function(dataUri) {
+		bool1 = 0;
 		Player = new MidiPlayer.Player(function(event) {
-      if(bool1 == 0){
-        tempo = Player.tempo;
-        bool1 = 1;
-      }
-      Player.setTempo($('.tempo').val());
-      if (event.name == 'Note on' && event.velocity > 0) {
-            $('key-note-animation').append('<div data-key-note="'+event.noteName+'"></div>');
-        }
-      setTimeout(function() {
-			if (event.name == 'Note on' && event.velocity > 0) {
-				instrument.play(event.noteName, ac.currentTime, {
-					gain: event.velocity / 100
-				});
-			}
-			if (event.name == 'Note on') {
-				instrument.play(event.noteName, ac.currentTime, {
-					gain: event.velocity / 100
-				});
-				var notediv = document.querySelector('[data-note="' + event.noteName.replace(/C-1/gi, 'NO') + '"]');
-				notediv.classList.add("key_active");
-				console.log("event: " + event.name + ", " + event.noteName.replace(/C-1/gi, 'NO'));
-            //document.querySelector('key-note-animation').innerHTML=document.querySelector('key-note-animation').innerHTML + '<div data-key-note="'+event.noteName+'"></div>';
-        //$('key-note-animation').append('<div data-key-note="'+event.noteName+'"></div>');
-			}
-			if (event.name == 'Note off') {
-				var notediv = document.querySelector('[data-note="' + event.noteName.replace(/C-1/gi, 'NO') + '"]');
-				notediv.classList.remove("key_active");
-				console.log("event: " + event.name + ", " + event.noteName.replace(/C-1/gi, 'NO'))
-			}
-        }, 1800);
-			
-			document.getElementById('tempo-display').innerHTML = Player.tempo;
+			playmidi(event);
+			lesson_mode(event);
 		});
-		
+
 		Player.loadDataUri(dataUri);
-		
+
 		document.getElementById('play-button').removeAttribute('disabled');
-		
+
 	}
-	
-	
-	
+
+
+
 	loadDataUri(We_Wish_Merry_Christma);
 });
 
