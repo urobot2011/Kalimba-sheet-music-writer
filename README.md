@@ -1,8 +1,12 @@
-# Kalimba-sheet-music-writer
+# Kalimba-sheet-music-writer 1.0.1
 ## Usage:
 1. Select a file with the file selector.
 2. Click Play!
 That's it!
+## Release notes:
+* Not yet.
+## Updating:
+* jQuery
 ## example:
 [Example page](https://urobot2011.github.io/Kalimba-sheet-music-writer/ "Example page")
 ## Libraries used:
