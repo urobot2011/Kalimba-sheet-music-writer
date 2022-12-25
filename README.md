@@ -1,4 +1,4 @@
-# Kalimba-sheet-music-writer
+# Kalimba-sheet-music-writer 1.0.0
 ## Usage:
 1. Select a file with the file selector.
 2. Click Play!
