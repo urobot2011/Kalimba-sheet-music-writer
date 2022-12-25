@@ -10,6 +10,14 @@ var timeoutId3;
 var bool1 = 0;
 var tempo = 50;
 
+var tempodiv = document.querySelector('.tempo');
+var tempodisplaydiv = document.querySelector('#tempo-display');
+var playbuttondiv = document.querySelector('#play-button');
+var lesson_modediv = document.querySelector('#lesson_mode');
+var keydivs = document.querySelectorAll('.key');
+var keynoteanimationdiv = document.querySelector('key-note-animation');
+var loadingdiv = document.querySelector('#loading');
+var selectfilediv = document.querySelector('#select-file');
 
 var changeTempo = function(tempo) {
 	Player.tempo = tempo;
@@ -17,42 +25,37 @@ var changeTempo = function(tempo) {
 
 var play = function() {
 	Player.play();
-	document.getElementById('play-button').innerHTML = 'Pause';
+	playbuttondiv.innerHTML = 'Pause';
 }
 
 var pause = function() {
 	Player.pause();
-	document.getElementById('play-button').innerHTML = 'Play';
+	playbuttondiv.innerHTML = 'Play';
 }
 
 var stop = function() {
-	if($('#lesson_mode').is(':checked')){
-		$('#lesson_mode').prop('checked', 0);
+	if(lesson_modediv.checked){
+		lesson_modediv.checked = false;
 		clearTimeout(timeoutId);
 		clearTimeout(timeoutId2);
 		clearTimeout(timeoutId3);
 		setTimeout(function() {
 			stop();
-			document.querySelectorAll('.key').forEach((key) => {
+			keydivs.forEach((key) => {
 				key.classList.remove("key_active");
 			});
 		}, 8000);
 	}
 	Player.stop();
-	document.getElementById('play-button').innerHTML = 'Play';
+	playbuttondiv.innerHTML = 'Play';
 }
 
 var reset = function() {
-	document.querySelectorAll('.key').forEach((key) => {
+	keydivs.forEach((key) => {
 		key.classList.remove("key_active");
 	});
-	document.getElementById('tempo-display').innerHTML = tempo;
-	$('.tempo').val(tempo);
-}
-
-var play = function() {
-	Player.play();
-	document.getElementById('play-button').innerHTML = 'Pause';
+	tempodisplaydiv.innerHTML = tempo;
+	tempodiv.value = tempo;
 }
 
 var playmidi = function(event) {
@@ -60,9 +63,12 @@ var playmidi = function(event) {
 		tempo = Player.tempo;
 		bool1 = 1;
 	}
-	Player.setTempo($('.tempo').val());
+	Player.setTempo(tempodiv.value);
 	if (event.name == 'Note on' && event.velocity > 0) {
-		$('key-note-animation').append('<div data-key-note="' + event.noteName + '"></div>');
+		//$('key-note-animation').append('<div data-key-note="' + event.noteName + '"></div>');
+		keynoteanimationdiv.insertAdjacentHTML("afterbegin", `
+		<div data-key-note="` + event.noteName + `"></div>
+		`);
 	}
 	setTimeout(function() {
 		if (event.name == 'Note on') {
@@ -72,8 +78,6 @@ var playmidi = function(event) {
 			var notediv = document.querySelector('[data-note="' + event.noteName.replace(/C-1/gi, 'NO') + '"]');
 			notediv.classList.add("key_active");
 			console.log("event: " + event.name + ", " + event.noteName.replace(/C-1/gi, 'NO'));
-			//document.querySelector('key-note-animation').innerHTML=document.querySelector('key-note-animation').innerHTML + '<div data-key-note="'+event.noteName+'"></div>';
-			//$('key-note-animation').append('<div data-key-note="'+event.noteName+'"></div>');
 		}
 		if (event.name == 'Note off') {
 			var notediv = document.querySelector('[data-note="' + event.noteName.replace(/C-1/gi, 'NO') + '"]');
@@ -81,11 +85,11 @@ var playmidi = function(event) {
 			console.log("event: " + event.name + ", " + event.noteName.replace(/C-1/gi, 'NO'))
 		}
 	}, 1800);
-	document.getElementById('tempo-display').innerHTML = Player.tempo;
+	tempodisplaydiv.innerHTML = Player.tempo;
 }
 
 var lesson_mode = function(event) {
-	if($('#lesson_mode').is(':checked')){
+	if(lesson_modediv.checked){
 		playmidi(event);
 		timeoutId = setTimeout(function() {
 			pause();
@@ -103,24 +107,23 @@ var lesson_mode = function(event) {
 				play();
 		}, 7500);
 	}
-	if(!$('#lesson_mode').is(':checked')){
+	if(!lesson_modediv.checked){
 		clearTimeout(timeoutId);
 		clearTimeout(timeoutId2);
 		clearTimeout(timeoutId3);
 	}
 }
 
-document.querySelectorAll('.key').forEach((key) => {
+keydivs.forEach((key) => {
 	key.innerHTML = '<span class="key-text">' + key.getAttribute("data-note").substring(0, 1) + '<br>' + key.getAttribute("data-key") + '</span>';
-
 });
 
 Soundfont.instrument(ac, 'kalimba').then(function(instrumentnow) {
 	instrument = instrumentnow;
-	document.getElementById('loading').style.display = 'none';
-	document.getElementById('select-file').style.display = 'block';
+	loadingdiv.style.display = 'none';
+	selectfilediv.style.display = 'block';
 
-	document.querySelectorAll('.key').forEach((key) => {
+	keydivs.forEach((key) => {
 		key.addEventListener("click", function(e) {
 			instrument.play(e.target.dataset.note.replace(/C-1/gi, 'C4')); //.replace(/C-1/gi, 'C4')
 		});
@@ -140,7 +143,7 @@ Soundfont.instrument(ac, 'kalimba').then(function(instrumentnow) {
 
 			Player.loadArrayBuffer(reader.result);
 
-			document.getElementById('play-button').removeAttribute('disabled');
+			playbuttondiv.removeAttribute('disabled');
 
 			play();
 		}, false);
@@ -155,12 +158,9 @@ Soundfont.instrument(ac, 'kalimba').then(function(instrumentnow) {
 
 		Player.loadDataUri(dataUri);
 
-		document.getElementById('play-button').removeAttribute('disabled');
+		playbuttondiv.removeAttribute('disabled');
 
 	}
-
-
-
 	loadDataUri(We_Wish_Merry_Christma);
 });
 
