@@ -6,7 +6,7 @@ That's it!
 ## Release notes:
 * Not yet.
 ## Updating:
-* jQuery
+[ ] Remove jQuery
 ## example:
 [Example page](https://urobot2011.github.io/Kalimba-sheet-music-writer/ "Example page")
 ## Libraries used:
