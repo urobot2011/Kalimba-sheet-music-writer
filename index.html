@@ -20,9 +20,9 @@
 						<li class="nav-item" id="select-file">
 							<div class="input-group">
 								<input type="file" class="form-control" aria-label="Upload" onchange="loadFile()" onclick="Player.stop()" accept="audio/mid">
-								<button class="btn btn-primary" id="play-button" onclick="Player.isPlaying() ? pause() : play();" disabled="disabled">Play</button>
-								<button class="btn btn-secondary" onclick="stop()">Stop</button>
-								<button class="btn btn-danger" onclick="reset()">Reset</button>
+								<button class="btn btn-primary" id="play-button" disabled="disabled">Play</button>
+								<button class="btn btn-secondary" id="stop-button">Stop</button>
+								<button class="btn btn-danger" id="reset-button">Reset</button>
 							</div>
 						</li>
 						<p style="visibility: hidden;"> mode </p>
@@ -33,8 +33,7 @@
 						<li class="nav-item" id="lesson_stepnumber"></li>
 						<li class="nav-item" id="lesson_step"></li>
 					</ul> Tempo: <span id="tempo-display"></span> bpm <br />
-					<input type="range" onchange="Player.setTempo(this.value);document.getElementById('tempo-display').innerHTML = this.value;" class="tempo" min="10" max="200">
-					<!-- form-range-->
+					<input type="range" class="tempo" min="10" max="200"><!-- form-range onchange="Player.setTempo(this.value);document.getElementById('tempo-display').innerHTML = this.value;" -->
 				</div>
 			</div>
 		</nav>
