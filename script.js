@@ -21,6 +21,7 @@ var selectfilediv = document.querySelector('#select-file');
 var playbuttondiv = document.querySelector('#play-button');
 var stopbuttondiv = document.querySelector('#stop-button');
 var resetbuttondiv = document.querySelector('#reset-button');
+var tempobuttondiv = document.querySelector('.tempo');
 
 var changeTempo = function(tempo) {
 	Player.tempo = tempo;
@@ -71,6 +72,11 @@ stopbuttondiv.addEventListener("click", function(e) {
 
 resetbuttondiv.addEventListener("click", function(e) {
 	reset();
+});
+
+tempobuttondiv.addEventListener("change", function(e) {
+	Player.setTempo(this.value);
+	document.getElementById('tempo-display').innerHTML = this.value;
 });
 
 var playmidi = function(event) {
