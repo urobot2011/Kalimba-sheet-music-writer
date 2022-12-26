@@ -12,12 +12,15 @@ var tempo = 50;
 
 var tempodiv = document.querySelector('.tempo');
 var tempodisplaydiv = document.querySelector('#tempo-display');
-var playbuttondiv = document.querySelector('#play-button');
 var lesson_modediv = document.querySelector('#lesson_mode');
 var keydivs = document.querySelectorAll('.key');
 var keynoteanimationdiv = document.querySelector('key-note-animation');
 var loadingdiv = document.querySelector('#loading');
 var selectfilediv = document.querySelector('#select-file');
+
+var playbuttondiv = document.querySelector('#play-button');
+var stopbuttondiv = document.querySelector('#stop-button');
+var resetbuttondiv = document.querySelector('#reset-button');
 
 var changeTempo = function(tempo) {
 	Player.tempo = tempo;
@@ -57,6 +60,18 @@ var reset = function() {
 	tempodisplaydiv.innerHTML = tempo;
 	tempodiv.value = tempo;
 }
+
+playbuttondiv.addEventListener("click", function(e) {
+	Player.isPlaying() ? pause() : play();
+});
+
+stopbuttondiv.addEventListener("click", function(e) {
+	stop();
+});
+
+resetbuttondiv.addEventListener("click", function(e) {
+	reset();
+});
 
 var playmidi = function(event) {
 	if (bool1 == 0) {
