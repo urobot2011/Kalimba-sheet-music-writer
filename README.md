@@ -5,8 +5,10 @@
 That's it!
 ## Release notes:
 * Remove jQuery
+* Minor code fixes
 ## Updating:
 - [x] Remove jQuery
+- [x] Minor code fixes
 - [ ] ...
 ## example:
 <!--[Example page](https://urobot2011.github.io/Kalimba-sheet-music-writer/ "Example page")-->
