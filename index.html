@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Kalimba sheet music writer V1.0.0</title>
+		<title>Kalimba sheet music writer V1.0.1</title>
 		<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css'>
 		<link rel="stylesheet" href="./style.css">
 	</head>
@@ -11,7 +11,7 @@
 		<!-- partial:index.partial.html -->
 		<nav class="navbar navbar-expand-lg bg-light">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Kalimba sheet music writer V1.0.0</a>
+				<a class="navbar-brand" href="#">Kalimba sheet music writer V1.0.1</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -20,9 +20,9 @@
 						<li class="nav-item" id="select-file">
 							<div class="input-group">
 								<input type="file" class="form-control" aria-label="Upload" onchange="loadFile()" onclick="Player.stop()" accept="audio/mid">
-								<button class="btn btn-primary" id="play-button" onclick="Player.isPlaying() ? pause() : play();" disabled="disabled">Play</button>
-								<button class="btn btn-secondary" onclick="stop()">Stop</button>
-								<button class="btn btn-danger" onclick="reset()">Reset</button>
+								<button class="btn btn-primary" id="play-button" disabled="disabled">Play</button>
+								<button class="btn btn-secondary" id="stop-button">Stop</button>
+								<button class="btn btn-danger" id="reset-button">Reset</button>
 							</div>
 						</li>
 						<p style="visibility: hidden;"> mode </p>
@@ -33,8 +33,7 @@
 						<li class="nav-item" id="lesson_stepnumber"></li>
 						<li class="nav-item" id="lesson_step"></li>
 					</ul> Tempo: <span id="tempo-display"></span> bpm <br />
-					<input type="range" onchange="Player.setTempo(this.value);document.getElementById('tempo-display').innerHTML = this.value;" class="tempo" min="10" max="200">
-					<!-- form-range-->
+					<input type="range" class="tempo" min="10" max="200"><!-- form-range onchange="Player.setTempo(this.value);document.getElementById('tempo-display').innerHTML = this.value;" -->
 				</div>
 			</div>
 		</nav>
@@ -69,14 +68,14 @@
 				<bottom-pad></bottom-pad>
 				<top-pad></top-pad>
 				<bottom-pad class="last-pad"></bottom-pad>
-				<div class="logo">Kalimba sheet music writer <br>1.0.0 </div>
+				<div class="logo">Kalimba sheet music writer <br>1.0.1 </div>
 				</div>
 		</kalimba_body>
 		<div data-note="NO"></div>
 		<!-- partial -->
 		<script src='https://urobot2011.github.io/Kalimba-sheet-music-writer/lib/midiplayer.js'></script>
 		<script src='https://urobot2011.github.io/Kalimba-sheet-music-writer/lib/soundfont-player.min.js'></script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js'></script>
+		<!--<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js'></script>-->
 		<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js'></script>
 		<script src="./script.js"></script>
 	</body>
