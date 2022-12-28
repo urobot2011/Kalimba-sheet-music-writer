@@ -4,9 +4,10 @@
 2. Click Play!
 That's it!
 ## Release notes:
+* Notes setting function
 * ...
 ## Updating:
-- [ ] Notes setting function
+- [x] Notes setting function
 - [ ] linked with the keyboard
 - [ ] Works with Master Keyboard
 ## example:
