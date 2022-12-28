@@ -1,82 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Kalimba sheet music writer V1.0.1</title>
-		<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css'>
-		<link rel="stylesheet" href="./style.css">
-	</head>
-	<body>
-		<!-- partial:index.partial.html -->
-		<nav class="navbar navbar-expand-lg bg-light">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Kalimba sheet music writer V1.0.1</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item" id="select-file">
-							<div class="input-group">
-								<input type="file" class="form-control" aria-label="Upload" onchange="loadFile()" onclick="Player.stop()" accept="audio/mid">
-								<button class="btn btn-primary" id="play-button" disabled="disabled">Play</button>
-								<button class="btn btn-secondary" id="stop-button">Stop</button>
-								<button class="btn btn-danger" id="reset-button">Reset</button>
-							</div>
-						</li>
-						<p style="visibility: hidden;"> mode </p>
-						<li class="nav-item">
-							<input type="checkbox" class="btn-check" id="lesson_mode" autocomplete="off">
-							<label class="btn btn-outline-info" for="lesson_mode">lesson mode</label>
-						</li>
-						<li class="nav-item" id="lesson_stepnumber"></li>
-						<li class="nav-item" id="lesson_step"></li>
-					</ul> Tempo: <span id="tempo-display"></span> bpm <br />
-					<input type="range" class="tempo" min="10" max="200"><!-- form-range onchange="Player.setTempo(this.value);document.getElementById('tempo-display').innerHTML = this.value;" -->
-				</div>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Kalimba sheet music writer V1.0.1</title>
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css'>
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Kalimba sheet music writer V1.0.2</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item" id="select-file">
+						<div class="input-group">
+							<input type="file" class="form-control" aria-label="Upload" onchange="loadFile()" onclick="Player.stop()" accept="audio/mid">
+							<button class="btn btn-primary" id="play-button" disabled="disabled">Play</button>
+							<button class="btn btn-secondary" id="stop-button">Stop</button>
+							<button class="btn btn-danger" id="reset-button">Reset</button>
+						</div>
+					</li>
+					<p style="visibility: hidden;">
+						mode
+					</p>
+					<li class="nav-item">
+						<input type="checkbox" class="btn-check" id="lesson_mode" autocomplete="off">
+						<label class="btn btn-outline-info" for="lesson_mode">lesson mode</label>
+					</li>
+					<li class="nav-item" id="lesson_stepnumber">
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							More settings
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								<input type="checkbox" class="btn-check" id="show_numbers" autocomplete="off">
+								<label class="btn btn-outline-info" for="show_numbers">Show numbers</label><!-- dropdown-item shownumbersbuttondiv-->
+							</li>
+						</ul>
+					</li>
+				</ul>
+				Tempo: <span id="tempo-display"></span> bpm<br />
+				<input type="range" class="tempo" min="10" max="200"><!-- form-range onchange="Player.setTempo(this.value);document.getElementById('tempo-display').innerHTML = this.value;" -->
 			</div>
-		</nav>
-		<p id="loading">Loading soundfont...</p>
-		<div id="events" class="well"></div>
-		<animation_body>
-			<key-note-animation>
-				<!--     <div data-key-note="D6"></div><div data-key-note="B5"></div><div data-key-note="G5"></div><div data-key-note="E5"></div><div data-key-note="C5"></div><div data-key-note="A4"></div><div data-key-note="F4"></div><div data-key-note="D4"></div><div data-key-note="C4"></div><div data-key-note="E4"></div><div data-key-note="G4"></div><div data-key-note="B4"></div><div data-key-note="D5"></div><div data-key-note="F5"></div><div data-key-note="A5"></div><div data-key-note="C6"></div><div data-key-note="E6"></div> -->
-			</key-note-animation>
-		</animation_body>
-		<br>
-		<br>
-		<kalimba_body>
-			<bottom-pad id="kalimba">
-				<div class="key" data-note="D6" data-key="2"></div>
-				<div class="key" data-note="B5" data-key="7"></div>
-				<div class="key" data-note="G5" data-key="5"></div>
-				<div class="key" data-note="E5" data-key="3"></div>
-				<div class="key" data-note="C5" data-key="1"></div>
-				<div class="key" data-note="A4" data-key="6"></div>
-				<div class="key" data-note="F4" data-key="4"></div>
-				<div class="key" data-note="D4" data-key="2"></div>
-				<div class="key" data-note="C4" data-key="1"></div>
-				<div class="key" data-note="E4" data-key="3"></div>
-				<div class="key" data-note="G4" data-key="5"></div>
-				<div class="key" data-note="B4" data-key="7"></div>
-				<div class="key" data-note="D5" data-key="2"></div>
-				<div class="key" data-note="F5" data-key="4"></div>
-				<div class="key " data-note="A5" data-key="6"></div>
-				<div class="key" data-note="C6" data-key="1"></div>
-				<div class="key last-key" data-note="E6" data-key="3"></div>
-				<bottom-pad></bottom-pad>
-				<top-pad></top-pad>
-				<bottom-pad class="last-pad"></bottom-pad>
-				<div class="logo">Kalimba sheet music writer <br>1.0.1 </div>
-				</div>
-		</kalimba_body>
-		<div data-note="NO"></div>
-		<!-- partial -->
-		<script src='https://urobot2011.github.io/Kalimba-sheet-music-writer/lib/midiplayer.js'></script>
-		<script src='https://urobot2011.github.io/Kalimba-sheet-music-writer/lib/soundfont-player.min.js'></script>
-		<!--<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js'></script>-->
-		<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js'></script>
-		<script src="./script.js"></script>
-	</body>
+		</div>
+	</nav>
+	<p id="loading">Loading soundfont...</p>
+	<div id="events" class="well"></div>
+	<animation_body>
+		<key-note-animation>
+			<!--     <div data-key-note="D6"></div>
+    <div data-key-note="B5"></div>
+    <div data-key-note="G5"></div>
+    <div data-key-note="E5"></div>
+    <div data-key-note="C5"></div>
+    <div data-key-note="A4"></div>
+    <div data-key-note="F4"></div>
+    <div data-key-note="D4"></div>
+    <div data-key-note="C4"></div>
+    <div data-key-note="E4"></div>
+    <div data-key-note="G4"></div>
+    <div data-key-note="B4"></div>
+    <div data-key-note="D5"></div>
+    <div data-key-note="F5"></div>
+    <div data-key-note="A5"></div>
+    <div data-key-note="C6"></div>
+    <div data-key-note="E6"></div> -->
+		</key-note-animation>
+	</animation_body>
+	<br><br>
+	<kalimba_body>
+		<bottom-pad id="kalimba">
+			<div class="key" data-note="D6" data-key="2"></div>
+			<div class="key" data-note="B5" data-key="7"></div>
+			<div class="key" data-note="G5" data-key="5"></div>
+			<div class="key" data-note="E5" data-key="3"></div>
+			<div class="key" data-note="C5" data-key="1"></div>
+			<div class="key" data-note="A4" data-key="6"></div>
+			<div class="key" data-note="F4" data-key="4"></div>
+			<div class="key" data-note="D4" data-key="2"></div>
+			<div class="key" data-note="C4" data-key="1"></div>
+			<div class="key" data-note="E4" data-key="3"></div>
+			<div class="key" data-note="G4" data-key="5"></div>
+			<div class="key" data-note="B4" data-key="7"></div>
+			<div class="key" data-note="D5" data-key="2"></div>
+			<div class="key" data-note="F5" data-key="4"></div>
+			<div class="key " data-note="A5" data-key="6"></div>
+			<div class="key" data-note="C6" data-key="1"></div>
+			<div class="key last-key" data-note="E6" data-key="3"></div>
+			<bottom-pad></bottom-pad>
+			<top-pad></top-pad>
+			<bottom-pad class="last-pad"></bottom-pad>
+			<div class="logo">Kalimba sheet music writer<br>1.0.2</div>
+			</div>
+	</kalimba_body>
+	<div data-note="NO"></div>
+	<script src='https://urobot2011.github.io/Kalimba-sheet-music-writer/lib/midiplayer.js'></script>
+	<script src='https://urobot2011.github.io/Kalimba-sheet-music-writer/lib/soundfont-player.min.js'></script>
+	<!--<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js'></script>-->
+	<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js'></script>
+	<script src="./script.js"></script>
+</body>
+
 </html>
