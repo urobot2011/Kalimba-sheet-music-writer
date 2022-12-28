@@ -12,7 +12,7 @@ That's it!
 - [ ] Works with Master Keyboard
 ## example:
 <!--[Example page](https://urobot2011.github.io/Kalimba-sheet-music-writer/ "Example page")-->
-[Example page](https://urobot2011.github.io/Kalimba-sheet-music-writer-example/V1.0.2/ "Example page")
+[Example page](https://urobot2011.github.io/Kalimba-sheet-music-writer-example-page/V1.0.2/ "Example page")
 #### Kalimba-sheet-music-writer-example-page repository here:
 [Kalimba-sheet-music-writer-example-page](https://github.com/urobot2011/Kalimba-sheet-music-writer-example-page "Kalimba-sheet-music-writer-example-page")
 ## Libraries used:
