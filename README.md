@@ -6,7 +6,9 @@ That's it!
 ## Release notes:
 * ...
 ## Updating:
-- [ ] ...
+- [ ] Notes setting function
+- [ ] linked with the keyboard
+- [ ] Works with Master Keyboard
 ## example:
 <!--[Example page](https://urobot2011.github.io/Kalimba-sheet-music-writer/ "Example page")-->
 [Example page](https://urobot2011.github.io/Kalimba-sheet-music-writer-example/V1.0.2/ "Example page")
