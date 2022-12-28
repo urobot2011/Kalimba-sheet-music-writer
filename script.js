@@ -23,6 +23,70 @@ var stopbuttondiv = document.querySelector('#stop-button');
 var resetbuttondiv = document.querySelector('#reset-button');
 var tempobuttondiv = document.querySelector('.tempo');
 
+var shownumbersbuttondiv = document.querySelector('#show_numbers');
+
+window.addEventListener("keyup", (e) => console.log(e));
+window.addEventListener("keydown", (e) => console.log(e));
+
+var notetonumber = function(note) {
+	switch (note) {
+		case "C4":
+			return "1";
+			break;
+		case "D4":
+			return "2";
+			break;
+		case "E4":
+			return "3";
+			break;
+		case "F4":
+			return "4";
+			break;
+		case "G4":
+			return "5";
+			break;
+		case "A4":
+			return "6";
+			break;
+		case "B4":
+			return "7";
+			break;
+		case "C5":
+			return "1";
+			break;
+		case "D5":
+			return "2";
+			break;
+		case "E5":
+			return "3";
+			break;
+		case "F5":
+			return "4";
+			break;
+		case "G5":
+			return "5";
+			break;
+		case "A5":
+			return "6";
+			break;
+		case "B5":
+			return "7";
+			break;
+		case "C6":
+			return "1";
+			break;
+		case "D6":
+			return "2";
+			break;
+		case "E6":
+			return "3";
+			break;
+		default:
+			return "";
+			break;
+	}
+}
+
 var changeTempo = function(tempo) {
 	Player.tempo = tempo;
 }
@@ -38,7 +102,7 @@ var pause = function() {
 }
 
 var stop = function() {
-	if(lesson_modediv.checked){
+	if (lesson_modediv.checked) {
 		lesson_modediv.checked = false;
 		clearTimeout(timeoutId);
 		clearTimeout(timeoutId2);
@@ -87,9 +151,15 @@ var playmidi = function(event) {
 	Player.setTempo(tempodiv.value);
 	if (event.name == 'Note on' && event.velocity > 0) {
 		//$('key-note-animation').append('<div data-key-note="' + event.noteName + '"></div>');
-		keynoteanimationdiv.insertAdjacentHTML("afterbegin", `
+		if (shownumbersbuttondiv.checked) {
+			keynoteanimationdiv.insertAdjacentHTML("afterbegin", `
+		<div data-key-note="` + event.noteName + `"><span class="key-text">` + notetonumber(event.noteName) + `</span></div>
+		`);
+		} else {
+			keynoteanimationdiv.insertAdjacentHTML("afterbegin", `
 		<div data-key-note="` + event.noteName + `"></div>
 		`);
+		}
 	}
 	setTimeout(function() {
 		if (event.name == 'Note on') {
@@ -110,7 +180,7 @@ var playmidi = function(event) {
 }
 
 var lesson_mode = function(event) {
-	if(lesson_modediv.checked){
+	if (lesson_modediv.checked) {
 		playmidi(event);
 		timeoutId = setTimeout(function() {
 			pause();
@@ -125,10 +195,10 @@ var lesson_mode = function(event) {
 		// 	playmidi(event);
 		// }, 12000);
 		timeoutId2 = setTimeout(function() {
-				play();
+			play();
 		}, 7500);
 	}
-	if(!lesson_modediv.checked){
+	if (!lesson_modediv.checked) {
 		clearTimeout(timeoutId);
 		clearTimeout(timeoutId2);
 		clearTimeout(timeoutId3);
@@ -143,13 +213,13 @@ Soundfont.instrument(ac, 'kalimba').then(function(instrumentnow) {
 	instrument = instrumentnow;
 	loadingdiv.style.display = 'none';
 	selectfilediv.style.display = 'block';
-
+	
 	keydivs.forEach((key) => {
 		key.addEventListener("click", function(e) {
 			instrument.play(e.target.dataset.note.replace(/C-1/gi, 'C4')); //.replace(/C-1/gi, 'C4')
 		});
 	});
-
+	
 	loadFile = function() {
 		Player.stop();
 		var file = document.querySelector('input[type=file]').files[0];
@@ -161,26 +231,26 @@ Soundfont.instrument(ac, 'kalimba').then(function(instrumentnow) {
 				playmidi(event);
 				lesson_mode(event);
 			});
-
+			
 			Player.loadArrayBuffer(reader.result);
-
+			
 			playbuttondiv.removeAttribute('disabled');
-
+			
 			play();
 		}, false);
 	}
-
+	
 	loadDataUri = function(dataUri) {
 		bool1 = 0;
 		Player = new MidiPlayer.Player(function(event) {
 			playmidi(event);
 			lesson_mode(event);
 		});
-
+		
 		Player.loadDataUri(dataUri);
-
+		
 		playbuttondiv.removeAttribute('disabled');
-
+		
 	}
 	loadDataUri(We_Wish_Merry_Christma);
 });
