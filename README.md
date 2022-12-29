@@ -5,10 +5,11 @@
 That's it!
 ## Release notes:
 * Notes setting function
+* linked with the keyboard
 * ...
 ## Updating:
 - [x] Notes setting function
-- [ ] linked with the keyboard
+- [x] linked with the keyboard
 - [ ] Works with Master Keyboard
 ## example:
 <!--[Example page](https://urobot2011.github.io/Kalimba-sheet-music-writer/ "Example page")-->
