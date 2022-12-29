@@ -24,67 +24,45 @@ var resetbuttondiv = document.querySelector('#reset-button');
 var tempobuttondiv = document.querySelector('.tempo');
 
 var shownumbersbuttondiv = document.querySelector('#show_numbers');
+var keyboardlayoutbuttondiv = document.querySelector('#keyboard_layout');
 
-window.addEventListener("keyup", (e) => console.log(e));
-window.addEventListener("keydown", (e) => console.log(e));
+window.addEventListener("keydown", function (e) {
+	var key = notetonote(keyboardtonote(e.key));
+	if (keyboardlayoutbuttondiv.checked) {
+		key = keyboardtonote(e.key);
+	}
+	console.log(key);
+	var notediv = document.querySelector('[data-note="' + key + '"]');
+	notediv.classList.add("key_active");
+	instrument.play(key);
+});
+
+window.addEventListener("keyup", function (e) {
+	var key = notetonote(keyboardtonote(e.key));
+	if (keyboardlayoutbuttondiv.checked) {
+		key = keyboardtonote(e.key);
+	}
+	console.log(key);
+	var notediv = document.querySelector('[data-note="' + key + '"]');
+	notediv.classList.remove("key_active");
+});
 
 var notetonumber = function(note) {
-	switch (note) {
-		case "C4":
-			return "1";
-			break;
-		case "D4":
-			return "2";
-			break;
-		case "E4":
-			return "3";
-			break;
-		case "F4":
-			return "4";
-			break;
-		case "G4":
-			return "5";
-			break;
-		case "A4":
-			return "6";
-			break;
-		case "B4":
-			return "7";
-			break;
-		case "C5":
-			return "1";
-			break;
-		case "D5":
-			return "2";
-			break;
-		case "E5":
-			return "3";
-			break;
-		case "F5":
-			return "4";
-			break;
-		case "G5":
-			return "5";
-			break;
-		case "A5":
-			return "6";
-			break;
-		case "B5":
-			return "7";
-			break;
-		case "C6":
-			return "1";
-			break;
-		case "D6":
-			return "2";
-			break;
-		case "E6":
-			return "3";
-			break;
-		default:
-			return "";
-			break;
-	}
+    	var notes = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6", "E6"];
+    	var notenumbers = ["1",  "2",  "3",  "4",  "5",  "6",  "7",  "1",  "2",  "3",  "4",  "5",  "6",  "7",  "1",  "2",  "3"];
+	return notenumbers[notes.indexOf(note)];
+}
+
+var keyboardtonote = function(keyboard) {
+	var keyboards = ["`",  "1",  "2",  "3", "4", "5",  "6",  "7",  "8",  "9",  "0",  "-",  "=",  "Backspace",  "Insert",  "Home",  "PageUp"];
+ var notes = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6", "E6"];
+	return notes[keyboards.indexOf(keyboard)];
+}
+
+var notetonote = function(note) {
+    	var notes = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6", "E6"];
+    	var notes1 = ["D6",  "B5",  "G5",  "E5",  "C5",  "A4",  "F4",  "D4",  "C4",  "E4",  "G4",  "B4",  "D5",  "F5",  "A5",  "C6",  "E6"];
+	return notes1[notes.indexOf(note)];
 }
 
 var changeTempo = function(tempo) {
