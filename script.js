@@ -23,6 +23,48 @@ var stopbuttondiv = document.querySelector('#stop-button');
 var resetbuttondiv = document.querySelector('#reset-button');
 var tempobuttondiv = document.querySelector('.tempo');
 
+var shownumbersbuttondiv = document.querySelector('#show_numbers');
+var keyboardlayoutbuttondiv = document.querySelector('#keyboard_layout');
+
+window.addEventListener("keydown", function (e) {
+	var key = notetonote(keyboardtonote(e.key));
+	if (keyboardlayoutbuttondiv.checked) {
+		key = keyboardtonote(e.key);
+	}
+	console.log(key);
+	var notediv = document.querySelector('[data-note="' + key + '"]');
+	notediv.classList.add("key_active");
+	instrument.play(key);
+});
+
+window.addEventListener("keyup", function (e) {
+	var key = notetonote(keyboardtonote(e.key));
+	if (keyboardlayoutbuttondiv.checked) {
+		key = keyboardtonote(e.key);
+	}
+	console.log(key);
+	var notediv = document.querySelector('[data-note="' + key + '"]');
+	notediv.classList.remove("key_active");
+});
+
+var notetonumber = function(note) {
+    	var notes = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6", "E6"];
+    	var notenumbers = ["1",  "2",  "3",  "4",  "5",  "6",  "7",  "1",  "2",  "3",  "4",  "5",  "6",  "7",  "1",  "2",  "3"];
+	return notenumbers[notes.indexOf(note)];
+}
+
+var keyboardtonote = function(keyboard) {
+	var keyboards = ["`",  "1",  "2",  "3", "4", "5",  "6",  "7",  "8",  "9",  "0",  "-",  "=",  "Backspace",  "Insert",  "Home",  "PageUp"];
+ var notes = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6", "E6"];
+	return notes[keyboards.indexOf(keyboard)];
+}
+
+var notetonote = function(note) {
+    	var notes = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6", "E6"];
+    	var notes1 = ["D6",  "B5",  "G5",  "E5",  "C5",  "A4",  "F4",  "D4",  "C4",  "E4",  "G4",  "B4",  "D5",  "F5",  "A5",  "C6",  "E6"];
+	return notes1[notes.indexOf(note)];
+}
+
 var changeTempo = function(tempo) {
 	Player.tempo = tempo;
 }
@@ -38,7 +80,7 @@ var pause = function() {
 }
 
 var stop = function() {
-	if(lesson_modediv.checked){
+	if (lesson_modediv.checked) {
 		lesson_modediv.checked = false;
 		clearTimeout(timeoutId);
 		clearTimeout(timeoutId2);
@@ -87,9 +129,15 @@ var playmidi = function(event) {
 	Player.setTempo(tempodiv.value);
 	if (event.name == 'Note on' && event.velocity > 0) {
 		//$('key-note-animation').append('<div data-key-note="' + event.noteName + '"></div>');
-		keynoteanimationdiv.insertAdjacentHTML("afterbegin", `
+		if (shownumbersbuttondiv.checked) {
+			keynoteanimationdiv.insertAdjacentHTML("afterbegin", `
+		<div data-key-note="` + event.noteName + `"><span class="key-text">` + notetonumber(event.noteName) + `</span></div>
+		`);
+		} else {
+			keynoteanimationdiv.insertAdjacentHTML("afterbegin", `
 		<div data-key-note="` + event.noteName + `"></div>
 		`);
+		}
 	}
 	setTimeout(function() {
 		if (event.name == 'Note on') {
@@ -110,7 +158,7 @@ var playmidi = function(event) {
 }
 
 var lesson_mode = function(event) {
-	if(lesson_modediv.checked){
+	if (lesson_modediv.checked) {
 		playmidi(event);
 		timeoutId = setTimeout(function() {
 			pause();
@@ -125,10 +173,10 @@ var lesson_mode = function(event) {
 		// 	playmidi(event);
 		// }, 12000);
 		timeoutId2 = setTimeout(function() {
-				play();
+			play();
 		}, 7500);
 	}
-	if(!lesson_modediv.checked){
+	if (!lesson_modediv.checked) {
 		clearTimeout(timeoutId);
 		clearTimeout(timeoutId2);
 		clearTimeout(timeoutId3);
@@ -143,13 +191,13 @@ Soundfont.instrument(ac, 'kalimba').then(function(instrumentnow) {
 	instrument = instrumentnow;
 	loadingdiv.style.display = 'none';
 	selectfilediv.style.display = 'block';
-
+	
 	keydivs.forEach((key) => {
 		key.addEventListener("click", function(e) {
 			instrument.play(e.target.dataset.note.replace(/C-1/gi, 'C4')); //.replace(/C-1/gi, 'C4')
 		});
 	});
-
+	
 	loadFile = function() {
 		Player.stop();
 		var file = document.querySelector('input[type=file]').files[0];
@@ -161,26 +209,26 @@ Soundfont.instrument(ac, 'kalimba').then(function(instrumentnow) {
 				playmidi(event);
 				lesson_mode(event);
 			});
-
+			
 			Player.loadArrayBuffer(reader.result);
-
+			
 			playbuttondiv.removeAttribute('disabled');
-
+			
 			play();
 		}, false);
 	}
-
+	
 	loadDataUri = function(dataUri) {
 		bool1 = 0;
 		Player = new MidiPlayer.Player(function(event) {
 			playmidi(event);
 			lesson_mode(event);
 		});
-
+		
 		Player.loadDataUri(dataUri);
-
+		
 		playbuttondiv.removeAttribute('disabled');
-
+		
 	}
 	loadDataUri(We_Wish_Merry_Christma);
 });
