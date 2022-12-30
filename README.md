@@ -10,6 +10,7 @@ That's it!
 ## Updating:
 - [x] Notes setting function
 - [x] linked with the keyboard
+- [ ] Automatically adjust note length
 - [ ] Works with Master Keyboard
 ## example:
 <!--[Example page](https://urobot2011.github.io/Kalimba-sheet-music-writer/ "Example page")-->
