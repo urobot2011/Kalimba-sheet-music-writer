@@ -6,7 +6,7 @@ That's it!
 ## Release notes:
 * ...
 ## Updating:
-- [ ] Changed MidiPlayerJS and soundfont-player to MIDI.js
+<!--- [ ] Changed MidiPlayerJS and soundfont-player to MIDI.js-->
 - [ ] Automatic note length change
 - [ ] ...
 ## example:
