@@ -7,6 +7,7 @@ That's it!
 * ...
 ## Updating:
 <!--- [ ] Changed MidiPlayerJS and soundfont-player to MIDI.js-->
+- [ ] Works with Master Keyboard
 - [ ] Automatic note length change
 - [ ] ...
 ## example:
