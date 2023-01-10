@@ -4,9 +4,10 @@
 2. Click Play!
 That's it!
 ## Release notes:
-* ...
+* Kalimba layout to piano
 ## Updating:
 <!--- [ ] Changed MidiPlayerJS and soundfont-player to MIDI.js-->
+- [x] Kalimba layout to piano
 - [ ] Works with Master Keyboard
 - [ ] Automatic note length change
 - [ ] ...
