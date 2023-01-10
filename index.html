@@ -12,7 +12,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg bg-light">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">Kalimba sheet music writer V1.0.2</a>
+			<a class="navbar-brand" href="#">Kalimba sheet music writer V1.0.3</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -26,9 +26,9 @@
 							<button class="btn btn-danger" id="reset-button">Reset</button>
 						</div>
 					</li>
-					<p style="visibility: hidden;">
+					<!--<p style="visibility: hidden;">
 						mode
-					</p>
+					</p>-->
 					<li class="nav-item">
 						<input type="checkbox" class="btn-check" id="lesson_mode" autocomplete="off">
 						<label class="btn btn-outline-info" for="lesson_mode">lesson mode</label>
@@ -57,6 +57,12 @@
 									</div><!-- dropdown-item shownumbersbuttondiv-->
 							</li>
 							<li>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="" id="kalimba_layout">
+									<label class="form-check-label" for="kalimba_layout">
+										Kalimba layout to piano
+									</label>
+									</div><!-- dropdown-item shownumbersbuttondiv-->
 							</li>
 						</ul>
 					</li>
@@ -92,28 +98,30 @@
 	<br><br>
 	<kalimba_body>
 		<bottom-pad id="kalimba">
-			<div class="key" data-note="D6" data-key="2"></div>
-			<div class="key" data-note="B5" data-key="7"></div>
-			<div class="key" data-note="G5" data-key="5"></div>
-			<div class="key" data-note="E5" data-key="3"></div>
-			<div class="key" data-note="C5" data-key="1"></div>
-			<div class="key" data-note="A4" data-key="6"></div>
-			<div class="key" data-note="F4" data-key="4"></div>
-			<div class="key" data-note="D4" data-key="2"></div>
-			<div class="key" data-note="C4" data-key="1"></div>
-			<div class="key" data-note="E4" data-key="3"></div>
-			<div class="key" data-note="G4" data-key="5"></div>
-			<div class="key" data-note="B4" data-key="7"></div>
-			<div class="key" data-note="D5" data-key="2"></div>
-			<div class="key" data-note="F5" data-key="4"></div>
-			<div class="key " data-note="A5" data-key="6"></div>
-			<div class="key" data-note="C6" data-key="1"></div>
-			<div class="key last-key" data-note="E6" data-key="3"></div>
+			<!--<kalimba-key>-->
+				<div class="key" data-note="D6"></div>
+				<div class="key" data-note="B5"></div>
+				<div class="key" data-note="G5"></div>
+				<div class="key" data-note="E5"></div>
+				<div class="key" data-note="C5"></div>
+				<div class="key" data-note="A4"></div>
+				<div class="key" data-note="F4"></div>
+				<div class="key" data-note="D4"></div>
+				<div class="key" data-note="C4"></div>
+				<div class="key" data-note="E4"></div>
+				<div class="key" data-note="G4"></div>
+				<div class="key" data-note="B4"></div>
+				<div class="key" data-note="D5"></div>
+				<div class="key" data-note="F5"></div>
+				<div class="key " data-note="A5"></div>
+				<div class="key" data-note="C6"></div>
+				<div class="key last-key" data-note="E6"></div>
+			<!--</kalimba-key>-->
 			<bottom-pad></bottom-pad>
 			<top-pad></top-pad>
 			<bottom-pad class="last-pad"></bottom-pad>
-			<div class="logo">Kalimba sheet music writer<br>1.0.2</div>
-			</div>
+			<div class="logo">Kalimba sheet music writer<br>1.0.3</div>
+		</bottom-pad>
 	</kalimba_body>
 	<div data-note="NO"></div>
 	<script src='https://urobot2011.github.io/Kalimba-sheet-music-writer/lib/midiplayer.js'></script>
